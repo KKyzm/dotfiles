@@ -1,0 +1,37 @@
+#! $HOME/.gitignore
+
+#----[ ignore all ] -----
+/*
+#---[ consider list ]---
+
+!*.[Xx]resources
+!*.conf
+!*config*
+!.config/
+!*[a-zA-Z]*rc
+
+.config/*
+# do not ignore $HOME/kitty/ and $HOME/lvim/
+!.config/kitty/
+!.config/lvim/
+
+# do not ignore $HOME/.config/Code/User/settings.json
+!.config/Code/
+.config/Code/*
+!.config/Code/User/
+.config/Code/User/*
+!.config/Code/User/settings.json
+
+# do not ignore $HOME/[files]
+!ideavimrc
+!.gitignore
+!.gitconfig
+
+#---[ ignore list ]---
+
+.bashrc
+.fonts.conf
+.nvidia-settings-rc
+.sys1og.conf
+.yarnrc
+

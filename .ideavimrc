@@ -1,0 +1,56 @@
+set easymotion
+set surround
+set argtextobj
+set commentary
+set multiple-cursors
+set NERDTree
+
+let mapleader=" "
+set visualbell
+set noerrorbells
+set number
+set showcmd
+set showmode
+set dialog
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+nnoremap S :w<CR>
+nnoremap Q :q!<CR>
+map J 5j
+map K 5k
+nnoremap sq :bd<CR>
+nnoremap <CR> viw
+noremap <LEADER><CR> :nohlsearch<CR>
+" relate to System Paste Pad
+noremap <LEADER>y "*y
+noremap <LEADER>p "*p
+" paste without considering Cut
+noremap <LEADER>P "0p
+
+" quick entrance to config files
+nnoremap R :source ~/.ideavimrc<CR>:nohlsearch<CR>
+nnoremap sc :e ~/.ideavimrc<CR>
+nnoremap sC :e ~/.config/nvim/init.vim<CR>
+
+nnoremap <A-o> gT
+nnoremap <A-i> gt
+
+nnoremap s; A;<Esc>
+
+nnoremap <LEADER>nn :NERDTreeToggle<CR>
+nnoremap <LEADER>nf :NERDTreeFocus<CR>
+nnoremap <LEADER>nx :NERDTreeClose<CR>
+
+nnoremap <LEADER>ha :actionlist  <BS>
+nnoremap <LEADER>aa :action GotoAction<CR>
+nnoremap <LEADER>d :action QuickJavaDoc<CR>
+nnoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+nnoremap <LEADER>rn :action RenameElement<CR>
+nnoremap == :action ReformatCode<CR>
+vnoremap = :action ReformatCode<CR>
+nnoremap U :action FindUsages<CR>
+nnoremap <LEADER>s :action SearchEverywhere<CR>

@@ -1,0 +1,39 @@
+{
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "CaskaydiaCove Nerd Font",
+  "editor.fontSize": 15,
+  "workbench.colorTheme": "Quiet Light",
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "window.commandCenter": true,
+  "editor.minimap.showSlider": "always",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": true,
+  "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    },
+    "zsh (2)": {
+      "path": "/usr/bin/zsh"
+    }
+  },
+  "editor.suggest.showStatusBar": true,
+  "terminal.integrated.fontWeight": "normal",
+  "editor.fontWeight": "normal",
+  "terminal.integrated.fontFamily": "NotoMono Nerd Font Mono",
+  "terminal.integrated.lineHeight": 1.2
+}

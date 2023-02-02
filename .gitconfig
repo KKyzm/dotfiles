@@ -1,0 +1,13 @@
+[user]
+	name = Yaniru
+	email = 2223009802@qq.com
+[color]
+	ui = true
+[core]
+	editor = lvim
+[pull]
+	rebase = true
+[https]
+	proxy = http://127.0.0.1:9981
+[http]
+	proxy = http://127.0.0.1:9981
