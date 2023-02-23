@@ -2,12 +2,12 @@
   "editor.fontLigatures": true,
   "editor.fontFamily": "CaskaydiaCove Nerd Font",
   "editor.fontSize": 15,
-  "workbench.colorTheme": "Quiet Light",
+  "workbench.colorTheme": "Everforest Dark",
   "terminal.integrated.defaultProfile.linux": "zsh",
   "window.commandCenter": true,
   "editor.minimap.showSlider": "always",
   "editor.cursorBlinking": "smooth",
-  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorSmoothCaretAnimation": "on",
   "terminal.integrated.profiles.linux": {
     "bash": {
       "path": "bash",

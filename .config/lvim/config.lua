@@ -19,7 +19,7 @@ lvim.format_on_save = {
 -- lvim.use_icons = false
 
 -- keymappings <https://www.lunarvim.org/docs/configuration/keybindings>
-lvim.leader = "space"
+lvim.leader = " "
 -- -- add your own keymapping
 -- lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 
@@ -39,10 +39,11 @@ lvim.builtin.which_key.mappings["t"] = {
   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
 
-lvim.builtin.which_key.mappings["sp"] = { "<cmd>Telescope projects<cr>", "projects" }
+lvim.builtin.which_key.mappings["v"] = { "<Plug>(wildfire-quick-select)", "Quick Select" }
+lvim.builtin.which_key.mappings["st"] = { "<cmd>Telescope live_grep<cr>", "Buffer Text" }
+lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<cr>", "Projects" }
 
-local wk = require("which-key")
-wk.register({
+require("which-key").register({
   ["g"] = {
     p = {
       name = "preview",
@@ -51,14 +52,14 @@ wk.register({
       i = { "<cmd>lua require('goto-preview').goto_preview_implementation()<CR>", "implementation" },
       r = { "<cmd>lua require('goto-preview').goto_preview_references()<CR>", "references" },
     },
-    P = { name = "close preview window", },
+    P = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "close preview window", },
   },
 })
 
 -- <cmd>lua require('goto-preview').close_all_win()<CR>
 
 -- Change theme settings
-lvim.colorscheme = "tokyonight-day"
+lvim.colorscheme = "everforest"
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerSync
 lvim.builtin.alpha.active = true
@@ -184,6 +185,66 @@ lvim.plugins = {
   { "tpope/vim-surround", },
   { "tpope/vim-repeat" },
   { "mg979/vim-visual-multi" },
+  { "gcmt/wildfire.vim" },
+  {
+    "gelguy/wilder.nvim",
+    -- yarp is required to use the optional python features
+    config = function()
+      local wilder = require('wilder')
+      wilder.setup({ modes = { ':', '/', '?' } })
+
+      local gradient = {
+        '#f4468f', '#fd4a85', '#ff507a', '#ff566f', '#ff5e63',
+        '#ff6658', '#ff704e', '#ff7a45', '#ff843d', '#ff9036',
+        '#f89b31', '#efa72f', '#e6b32e', '#dcbe30', '#d2c934',
+        '#c8d43a', '#bfde43', '#b6e84e', '#aff05b'
+      }
+
+      for i, fg in ipairs(gradient) do
+        gradient[i] = wilder.make_hl('WilderGradient' .. i, 'Pmenu', { { a = 1 }, { a = 1 }, { foreground = fg } })
+      end
+
+      wilder.set_option('pipeline', {
+        wilder.branch(
+          wilder.cmdline_pipeline({
+            -- sets the language to use, 'vim' and 'python' are supported
+            language = 'python',
+            -- 0 turns off fuzzy matching
+            -- 1 turns on fuzzy matching
+            -- 2 partial fuzzy matching (match does not have to begin with the same first letter)
+            fuzzy = 2,
+          }),
+          wilder.python_search_pipeline({
+            -- can be set to wilder#python_fuzzy_delimiter_pattern() for stricter fuzzy matching
+            pattern = wilder.python_fuzzy_pattern(),
+            -- omit to get results in the order they appear in the buffer
+            sorter = wilder.python_difflib_sorter(),
+            -- can be set to 're2' for performance, requires pyre2 to be installed
+            -- see :h wilder#python_search() for more details
+            engine = 're2',
+          })
+        ),
+      })
+
+      wilder.set_option('renderer', wilder.popupmenu_renderer(
+        wilder.popupmenu_border_theme({
+          highlights = {
+            gradient = gradient, -- must be set
+            -- selected_gradient key can be set to apply gradient highlighting for the selected candidate.
+          },
+          highlighter = wilder.highlighter_with_gradient({
+            wilder.basic_highlighter(), -- or wilder.lua_fzy_highlighter(),
+          }),
+          left = { ' ', wilder.popupmenu_devicons() },
+          right = { ' ', wilder.popupmenu_scrollbar() },
+          -- 'single', 'double', 'rounded' or 'solid'
+          -- can also be a list of 8 characters, see :h wilder#popupmenu_border_theme() for more details
+          border = 'rounded',
+        })
+      ))
+    end
+
+  },
   {
     "utilyre/barbecue.nvim",
     version = "*",
@@ -204,9 +265,39 @@ lvim.plugins = {
       })
     end,
   },
+  { "sainnhe/everforest" },
+  {
+    'abecodes/tabout.nvim',
+    config = function()
+      require('tabout').setup {
+        tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
+        backwards_tabkey = '<S-Tab>', -- key to trigger backwards tabout, set to an empty string to disable
+        act_as_tab = true, -- shift content if tab out is not possible
+        act_as_shift_tab = false, -- reverse shift content if tab out is not possible (if your keyboard/terminal supports <S-Tab>)
+        default_tab = '<C-t>', -- shift default action (only at the beginning of a line, otherwise <TAB> is used)
+        default_shift_tab = '<C-d>', -- reverse shift default action,
+        enable_backwards = true, -- well ...
+        completion = true, -- if the tabkey is used in a completion pum
+        tabouts = {
+          { open = "'", close = "'" },
+          { open = '"', close = '"' },
+          { open = '`', close = '`' },
+          { open = '(', close = ')' },
+          { open = '[', close = ']' },
+          { open = '{', close = '}' },
+          { open = '<', close = '>' }
+        },
+        ignore_beginning = true, --[[ if the cursor is at the beginning of a filled element it will rather tab out than shift the content ]]
+        exclude = {} -- tabout will ignore these filetypes
+      }
+    end,
+    dependencies = { 'nvim-treesitter' }, -- or require if not used so far
+    after = { 'nvim-cmp' } -- if a completion plugin is using tabs load it before
+  },
 }
 
 vim.api.nvim_command("let g:VM_theme = 'purplegray'")
+vim.api.nvim_command("let g:wildfire_objects = [\"iw\", \"i'\", 'i\"', \"i)\", \"i]\", \"i}\", \"ip\", \"it\"]")
 
 -- -- Autocommands (`:help autocmd`) <https://neovim.io/doc/user/autocmd.html>
 -- vim.api.nvim_create_autocmd("FileType", {

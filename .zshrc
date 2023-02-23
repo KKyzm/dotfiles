@@ -18,6 +18,10 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+
+if [[ ! -d ~/.local/share/ohmyzsh-master ]]; then
+  git clone --branch master --single-branch https://github.com/ohmyzsh/ohmyzsh.git ~/.local/share/ohmyzsh-master
+fi
 # init ohmyzsh and theme
 source ~/.local/share/ohmyzsh-master/oh-my-zsh.sh
 # source ~/.local/share/ohmyzsh-master/themes/amuse.zsh-theme
@@ -38,7 +42,6 @@ alias trans="trans"
 alias transb="trans --brief"
 alias tranz="trans :zh-CN"
 alias tranzb="trans :zh-CN --brief"
-alias rm='echo "rm: This is not the command you are looking for."; false'
 alias trp="trash-put"
 alias trl="trash-list"
 alias trr="trash-restore"
@@ -50,6 +53,7 @@ alias ff="fuck"
 alias le="leetcode"
 alias e="exit"
 alias q="exit"
+alias c="clear"
 alias ra="ranger"
 alias conf='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
