@@ -39,6 +39,9 @@ lvim.builtin.which_key.mappings["t"] = {
   r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
 }
 
+lvim.builtin.which_key.mappings["W"] = { "<cmd>wa<cr>", "Save All" }
+lvim.builtin.which_key.mappings["Q"] = { "<cmd>qa<cr>", "Quit All" }
+lvim.builtin.which_key.mappings["x"] = { "<cmd>BufferKill<cr><cmd>quit<cr>", "Close Win&Buffer" }
 lvim.builtin.which_key.mappings["v"] = { "<Plug>(wildfire-quick-select)", "Quick Select" }
 lvim.builtin.which_key.mappings["st"] = { "<cmd>Telescope live_grep<cr>", "Buffer Text" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<cr>", "Projects" }
@@ -55,6 +58,9 @@ require("which-key").register({
     P = { "<cmd>lua require('goto-preview').close_all_win()<CR>", "close preview window", },
   },
 })
+
+vim.api.nvim_command("cabbrev vsb vertical sbuffer")
+vim.api.nvim_command("cabbrev sb sbuffer")
 
 -- <cmd>lua require('goto-preview').close_all_win()<CR>
 
@@ -146,9 +152,14 @@ lvim.plugins = {
         default_mappings = true; -- Bind default mappings
         debug = false; -- Print debug information
         opacity = 10; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        post_open_hook = nil -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        post_open_hook = function()
+          -- add preview window to buffer list
+          local buffer_num = vim.api.nvim_get_current_buf() -- current buffer
+          vim.api.nvim_buf_set_option(buffer_num, "buflisted", true)
+        end;
       }
-    end
+    end,
+
   },
   {
     "ray-x/lsp_signature.nvim",
@@ -165,7 +176,7 @@ lvim.plugins = {
   },
   {
     "karb94/neoscroll.nvim",
-    event = "WinScrolled",
+    -- event = "WinScrolled",
     config = function()
       require('neoscroll').setup({
         -- All these keys will be mapped to their corresponding default scrolling animation
