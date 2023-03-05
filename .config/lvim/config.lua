@@ -45,6 +45,7 @@ lvim.builtin.which_key.mappings["x"] = { "<cmd>BufferKill<cr><cmd>quit<cr>", "Cl
 lvim.builtin.which_key.mappings["v"] = { "<Plug>(wildfire-quick-select)", "Quick Select" }
 lvim.builtin.which_key.mappings["st"] = { "<cmd>Telescope live_grep<cr>", "Buffer Text" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<cr>", "Projects" }
+lvim.builtin.which_key.mappings["bp"] = { "<cmd>BufferLinePick<cr>", "Pick buffer " }
 
 require("which-key").register({
   ["g"] = {
@@ -73,6 +74,7 @@ lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.bufferline.options.always_show_bufferline = true
 
 -- Automatically install missing parsers when entering buffer
 lvim.builtin.treesitter.auto_install = true
@@ -266,19 +268,19 @@ lvim.plugins = {
     },
     config = function()
       require("barbecue").setup({
-        show_modified = true,
+        show_modified = false,
         symbols = {
           ---modification indicator
           ---@type string
-          modified = "Modified",
+          -- modified = lvim.icons.ui.Circle,
         },
-        custom_section = function() return "Be your own hero." end,
+        -- custom_section = function() return "Be your own hero." end,
       })
     end,
   },
   { "sainnhe/everforest" },
   {
-    'abecodes/tabout.nvim',
+    "abecodes/tabout.nvim",
     config = function()
       require('tabout').setup {
         tabkey = '<Tab>', -- key to trigger tabout, set to an empty string to disable
@@ -305,6 +307,11 @@ lvim.plugins = {
     dependencies = { 'nvim-treesitter' }, -- or require if not used so far
     after = { 'nvim-cmp' } -- if a completion plugin is using tabs load it before
   },
+  { "tiagovla/scope.nvim",
+    config = function()
+      require("scope").setup()
+    end
+  },
 }
 
 vim.api.nvim_command("let g:VM_theme = 'purplegray'")
@@ -316,5 +323,11 @@ vim.api.nvim_command("let g:wildfire_objects = [\"iw\", \"i'\", 'i\"', \"i)\", \
 --   callback = function()
 --     -- let treesitter use bash highlight for zsh files as well
 --     require("nvim-treesitter.highlight").attach(0, "bash")
+--   end,
+-- })
+--   end,
+-- })
+--   end,
+-- })
 --   end,
 -- })
