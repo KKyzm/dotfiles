@@ -195,7 +195,7 @@ lvim.plugins = {
       })
     end
   },
-  { "tpope/vim-surround", },
+  { "tpope/vim-surround" },
   { "tpope/vim-repeat" },
   { "mg979/vim-visual-multi" },
   { "gcmt/wildfire.vim" },
@@ -312,6 +312,55 @@ lvim.plugins = {
       require("scope").setup()
     end
   },
+  {
+    "folke/todo-comments.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
+    config = function()
+      require("todo-comments").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  },
+  { "folke/zen-mode.nvim" },
+  { "folke/twilight.nvim" },
+  {
+    "klen/nvim-config-local",
+    config = function()
+      require('config-local').setup {
+        -- Default configuration (optional)
+        config_files = { ".vimrc.lua", ".vimrc" }, -- Config file patterns to load (lua supported)
+        hashfile = vim.fn.stdpath("data") .. "/config-local", -- Where the plugin keeps files data
+        autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
+        commands_create = true, -- Create commands (ConfigSource, ConfigEdit, ConfigTrust, ConfigIgnore)
+        silent = false, -- Disable plugin messages (Config loaded/ignored)
+        lookup_parents = true, -- Lookup config files in parent directories
+      }
+    end
+  },
+  {
+    "nvim-neorg/neorg",
+    ft = "norg",
+    after = "nvim-treesitter", -- You may want to specify Telescope here as well
+    config = function()
+      require('neorg').setup {
+        load = {
+          ["core.defaults"] = {}, -- Loads default behaviour
+          ["core.norg.concealer"] = {}, -- Adds pretty icons to your documents
+          ["core.norg.dirman"] = { -- Manages Neorg workspaces
+            config = {
+              workspaces = {
+                notes = "~/workshop/neorg-notes",
+              },
+            },
+          },
+        },
+      }
+    end,
+    build = ":Neorg sync-parsers",
+    dependencies = "nvim-lua/plenary.nvim",
+  }
 }
 
 vim.api.nvim_command("let g:VM_theme = 'purplegray'")
@@ -325,9 +374,4 @@ vim.api.nvim_command("let g:wildfire_objects = [\"iw\", \"i'\", 'i\"', \"i)\", \
 --     require("nvim-treesitter.highlight").attach(0, "bash")
 --   end,
 -- })
---   end,
--- })
---   end,
--- })
---   end,
--- })
+--

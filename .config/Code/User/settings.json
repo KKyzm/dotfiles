@@ -35,5 +35,7 @@
   "terminal.integrated.fontWeight": "normal",
   "editor.fontWeight": "normal",
   "terminal.integrated.fontFamily": "NotoMono Nerd Font Mono",
-  "terminal.integrated.lineHeight": 1.2
+  "terminal.integrated.lineHeight": 1.2,
+  "redhat.telemetry.enabled": true,
+  "editor.minimap.enabled": false
 }
